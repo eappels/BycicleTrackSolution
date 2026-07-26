@@ -23,7 +23,7 @@
                 <RoundRectangle CornerRadius="24" />
             </Border.StrokeShape>
             <Button Text="History"
-                    Command="{Binding ToggleHistoryCommand}"
+                     Clicked="OnHistoryClicked"
                     BackgroundColor="Transparent"
                     TextColor="White"
                     FontAttributes="Bold"
@@ -44,35 +44,6 @@
                     TextColor="White"
                     WidthRequest="140"
                     HeightRequest="80" />
-        </Border>
-
-        <Border IsVisible="{Binding IsHistoryVisible}"
-                AbsoluteLayout.LayoutBounds="0.5,1,0.92,280"
-                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
-                Margin="0,0,0,104"
-                Padding="20,16"
-                BackgroundColor="#F2FFFFFF"
-                StrokeThickness="0"
-                Shadow="0,4,16,0,#33000000">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="24,24,24,24" />
-            </Border.StrokeShape>
-            <Grid RowDefinitions="Auto,*">
-                <Grid ColumnDefinitions="*,Auto"
-                      Margin="0,0,0,12">
-                    <Label Text="History"
-                           FontSize="20"
-                           FontAttributes="Bold" />
-                    <Button Grid.Column="1"
-                            Text="Close"
-                            Command="{Binding CloseHistoryCommand}"
-                            BackgroundColor="Transparent"
-                            TextColor="Gray" />
-                </Grid>
-
-                <ContentView x:Name="HistoryHost"
-                             Grid.Row="1" />
-            </Grid>
         </Border>
     </AbsoluteLayout>
 </ContentPage>
