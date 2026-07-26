@@ -23,9 +23,9 @@
 
             <Grid Grid.Row="1"
                   ColumnDefinitions="Auto,*,Auto">
-                <Button Text="Newer"
-                        Command="{Binding ShowNewerRideCommand}"
-                        IsEnabled="{Binding CanShowNewerRide}"
+                <Button Text="Older"
+                        Command="{Binding ShowOlderRideCommand}"
+                        IsEnabled="{Binding CanShowOlderRide}"
                         BackgroundColor="Transparent"
                         TextColor="#0F766E" />
                 <Label Grid.Column="1"
@@ -34,9 +34,9 @@
                        VerticalTextAlignment="Center"
                        FontAttributes="Bold" />
                 <Button Grid.Column="2"
-                        Text="Older"
-                        Command="{Binding ShowOlderRideCommand}"
-                        IsEnabled="{Binding CanShowOlderRide}"
+                        Text="Newer"
+                        Command="{Binding ShowNewerRideCommand}"
+                        IsEnabled="{Binding CanShowNewerRide}"
                         BackgroundColor="Transparent"
                         TextColor="#0F766E" />
             </Grid>
