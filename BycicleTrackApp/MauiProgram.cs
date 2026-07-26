@@ -1,5 +1,8 @@
 ﻿using BycicleTrackApp.Services;
 using BycicleTrackApp.Services.Interfaces;
+using BycicleTrackApp.Data.Models;
+using BycicleTrackApp.Data.Repositories;
+using BycicleTrackApp.Services;
 using BycicleTrackApp.ViewModels;
 using BycicleTrackApp.Views;
 using Microsoft.Extensions.Logging;
@@ -25,6 +28,7 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddSingleton<ILocationService, LocationService>();
+        builder.Services.AddSingleton<IRepository<LocationOnMap>, LocationRepository>();
 
         builder.Services.AddSingleton<MapViewModel>();
         builder.Services.AddSingleton<HistoryViewModel>();

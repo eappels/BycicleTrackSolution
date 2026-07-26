@@ -1,6 +1,8 @@
 using BycicleTrackApp.Messages;
+using BycicleTrackApp.Messages;
 using BycicleTrackApp.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
@@ -15,18 +17,18 @@ public partial class MapView : ContentPage
     private double zoomLevel = 250;
     private IDispatcherTimer timer;
     private PropertyChangedEventHandler mapPropertyChangedHandler;
+    private readonly IServiceProvider serviceProvider;
 
-    public MapView(MapViewModel viewModel, HistoryView historyView)
+    public MapView(MapViewModel viewModel, IServiceProvider serviceProvider)
     {
         InitializeComponent();
+        this.serviceProvider = serviceProvider;
 
         this.On<iOS>().SetUseSafeArea(false);
         Padding = 0;
 
         if (BindingContext is not MapViewModel mapViewModel)
             BindingContext = viewModel;
-
-        HistoryHost.Content = historyView;
 
         timer = Dispatcher.CreateTimer();
         timer.Interval = TimeSpan.FromSeconds(3);
@@ -79,12 +81,6 @@ public partial class MapView : ContentPage
         }
     }
 
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        Dispose();
-    }
-
     public void Dispose()
     {
         if (timer != null)
@@ -101,5 +97,11 @@ public partial class MapView : ContentPage
             MyMap.PropertyChanged -= mapPropertyChangedHandler;
             mapPropertyChangedHandler = null;
         }
+    }
+
+    private async void OnHistoryClicked(object? sender, EventArgs e)
+    {
+        var historyView = serviceProvider.GetRequiredService<HistoryView>();
+        await Navigation.PushModalAsync(historyView);
     }
 }
