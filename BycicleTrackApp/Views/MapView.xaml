@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:Class="BycicleTrackApp.Views.MapView"
+             Padding="0"
+             ios:Page.UseSafeArea="False"
+             Shell.NavBarIsVisible="False"
+             Title="MapView">
+    <AbsoluteLayout IgnoreSafeArea="True">
+        <maps:Map x:Name="MyMap"
+                  AbsoluteLayout.LayoutBounds="0,0,1,1"
+                  AbsoluteLayout.LayoutFlags="All"
+                  Margin="0" />
+
+        <Border AbsoluteLayout.LayoutBounds="1,0,AutoSize,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                Margin="0,44,16,0"
+                BackgroundColor="#CC1F1F1F"
+                StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="24" />
+            </Border.StrokeShape>
+            <Button Text="History"
+                    Command="{Binding ToggleHistoryCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    Padding="18,10" />
+        </Border>
+
+        <Border AbsoluteLayout.LayoutBounds="0.5,1,140,80"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                Margin="0,0,0,32"
+           BackgroundColor="#CC1F1F1F"
+                StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="28" />
+            </Border.StrokeShape>
+            <Button Text="{Binding StartStopButtonText}"
+                    Command="{Binding StartStopCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    WidthRequest="140"
+                    HeightRequest="80" />
+        </Border>
+
+        <Border IsVisible="{Binding IsHistoryVisible}"
+                AbsoluteLayout.LayoutBounds="0.5,1,0.92,280"
+                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+                Margin="0,0,0,104"
+                Padding="20,16"
+                BackgroundColor="#F2FFFFFF"
+                StrokeThickness="0"
+                Shadow="0,4,16,0,#33000000">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="24,24,24,24" />
+            </Border.StrokeShape>
+            <Grid RowDefinitions="Auto,*">
+                <Grid ColumnDefinitions="*,Auto"
+                      Margin="0,0,0,12">
+                    <Label Text="History"
+                           FontSize="20"
+                           FontAttributes="Bold" />
+                    <Button Grid.Column="1"
+                            Text="Close"
+                            Command="{Binding CloseHistoryCommand}"
+                            BackgroundColor="Transparent"
+                            TextColor="Gray" />
+                </Grid>
+
+                <ContentView x:Name="HistoryHost"
+                             Grid.Row="1" />
+            </Grid>
+        </Border>
+    </AbsoluteLayout>
+</ContentPage>
