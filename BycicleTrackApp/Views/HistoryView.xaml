@@ -7,7 +7,7 @@
              Shell.NavBarIsVisible="False">
     <Grid RowDefinitions="Auto,*"
           Padding="20,52,20,20">
-        <Grid RowDefinitions="Auto,Auto"
+        <Grid RowDefinitions="Auto,Auto,Auto"
               RowSpacing="16">
             <Grid ColumnDefinitions="*,Auto">
                 <Label Text="History"
@@ -39,6 +39,26 @@
                         IsEnabled="{Binding CanShowOlderRide}"
                         BackgroundColor="Transparent"
                         TextColor="#0F766E" />
+            </Grid>
+
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="*,*"
+                  Margin="0,8,0,0">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Time"
+                           FontSize="12"
+                           TextColor="Gray" />
+                    <Label Text="{Binding CurrentRideDuration}"
+                           FontAttributes="Bold" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1"
+                                     Spacing="2">
+                    <Label Text="Distance"
+                           FontSize="12"
+                           TextColor="Gray" />
+                    <Label Text="{Binding CurrentRideDistance}"
+                           FontAttributes="Bold" />
+                </VerticalStackLayout>
             </Grid>
         </Grid>
 
