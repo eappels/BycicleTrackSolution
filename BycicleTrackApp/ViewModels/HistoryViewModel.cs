@@ -15,6 +15,7 @@ public partial class HistoryViewModel : ObservableObject
     private string currentRideTitle = "No rides yet";
     private string currentRideDuration = "--";
     private string currentRideDistance = "--";
+    private bool canDeleteCurrentRide;
     private bool canShowOlderRide;
     private bool canShowNewerRide;
 
@@ -48,6 +49,12 @@ public partial class HistoryViewModel : ObservableObject
     {
         get => currentRideDistance;
         private set => SetProperty(ref currentRideDistance, value);
+    }
+
+    public bool CanDeleteCurrentRide
+    {
+        get => canDeleteCurrentRide;
+        private set => SetProperty(ref canDeleteCurrentRide, value);
     }
 
     public HistoryViewModel(IRepository<LocationOnMap> repository)
@@ -90,6 +97,28 @@ public partial class HistoryViewModel : ObservableObject
         }
     }
 
+    public async Task DeleteCurrentRideAsync()
+    {
+        if (selectedRideIndex < 0 || selectedRideIndex >= rides.Count)
+            return;
+
+        var rideToDelete = rides[selectedRideIndex].ToList();
+
+        foreach (var location in rideToDelete)
+        {
+            await repository.DeleteAsync(location);
+        }
+
+        rides.RemoveAt(selectedRideIndex);
+
+        if (selectedRideIndex >= rides.Count)
+        {
+            selectedRideIndex = rides.Count - 1;
+        }
+
+        ShowSelectedRide();
+    }
+
     private void ShowSelectedRide()
     {
         HistoryLocations.Clear();
@@ -99,6 +128,7 @@ public partial class HistoryViewModel : ObservableObject
             CurrentRideTitle = "No rides yet";
             CurrentRideDuration = "--";
             CurrentRideDistance = "--";
+            CanDeleteCurrentRide = false;
             CanShowOlderRide = false;
             CanShowNewerRide = false;
             return;
@@ -112,6 +142,7 @@ public partial class HistoryViewModel : ObservableObject
         CurrentRideTitle = BuildRideTitle(rides[selectedRideIndex]);
         CurrentRideDuration = BuildRideDuration(rides[selectedRideIndex]);
         CurrentRideDistance = BuildRideDistance(rides[selectedRideIndex]);
+        CanDeleteCurrentRide = true;
         CanShowOlderRide = selectedRideIndex < rides.Count - 1;
         CanShowNewerRide = selectedRideIndex > 0;
     }

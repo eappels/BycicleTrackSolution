@@ -1,5 +1,4 @@
 using BycicleTrackApp.ViewModels;
-using BycicleTrackApp.ViewModels;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using System.Collections.Specialized;
@@ -98,5 +97,22 @@ public partial class HistoryView : ContentPage
     private async void OnCloseClicked(object? sender, EventArgs e)
     {
         await Navigation.PopModalAsync();
+    }
+
+    private async void OnDeleteClicked(object? sender, EventArgs e)
+    {
+        if (!viewModel.CanDeleteCurrentRide)
+            return;
+
+        var shouldDelete = await DisplayAlert(
+            "Delete ride",
+            "Delete the currently selected ride?",
+            "Delete",
+            "Cancel");
+
+        if (!shouldDelete)
+            return;
+
+        await viewModel.DeleteCurrentRideAsync();
     }
 }

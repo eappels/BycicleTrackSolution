@@ -22,6 +22,12 @@ public class LocationRepository : IRepository<LocationOnMap>
         return await database.InsertAsync(item);
     }
 
+    public async Task<int> DeleteAsync(LocationOnMap item)
+    {
+        await initializationTask;
+        return await database.DeleteAsync(item);
+    }
+
     public async Task<List<LocationOnMap>> GetAllAsync()
     {
         await initializationTask;
